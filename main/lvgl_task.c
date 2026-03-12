@@ -119,6 +119,15 @@ static void lvgl_task(void *arg)
   ESP_LOGI(TAG, "Starting LVGL main loop");
   // init user interface
   init_gui();  
+
+  while (1)
+  {
+    uint32_t time_till_next = lv_timer_handler();
+    /* code */
+    vTaskDelay(pdMS_TO_TICKS(time_till_next > 0 ? time_till_next : 10));
+
+  }
+  
 }
 
 /* ---------------- INIT ---------------- */
