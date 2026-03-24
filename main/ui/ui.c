@@ -16,7 +16,7 @@ static lv_obj_t *home_tab = NULL; /** tab which holds all the components for hom
 static lv_obj_t *settings_tab = NULL; /** tab which holds all the settings ui components */
 static void create_brightness_slider(lv_obj_t *parent);
 
-
+static void create_button_matrix(lv_obj_t *parent);
 
 
 /* ---------------- UI ---------------- */
@@ -35,6 +35,7 @@ void lv_tabview(lv_obj_t *screen)
 
     create_brightness_slider(settings_tab);
 
+    create_button_matrix(home_tab);
 
 }
 
@@ -56,6 +57,20 @@ static void create_brightness_slider(lv_obj_t *parent) {
     lv_obj_center(slider);                                  /*Align to the center of the parent (screen)*/
     lv_obj_add_event_cb(slider, brightness_slider_event_cb, LV_EVENT_VALUE_CHANGED, NULL);     /*Assign an event function*/
 }
+
+static const char * btnm_map[] = {"1", "2", "3", "4", "5", "\n",
+    "6", "7", "8", "9", "0", "\n",
+    "Action1", "Action2", ""
+   };
+static void create_button_matrix(lv_obj_t *parent){
+    lv_obj_t * btnm1 = lv_buttonmatrix_create(parent);
+    lv_buttonmatrix_set_map(btnm1, btnm_map);
+    lv_buttonmatrix_set_button_width(btnm1, 10, 2);        /*Make "Action1" twice as wide as "Action2"*/
+    lv_buttonmatrix_set_button_ctrl(btnm1, 10, LV_BUTTONMATRIX_CTRL_CHECKABLE);
+    lv_buttonmatrix_set_button_ctrl(btnm1, 11, LV_BUTTONMATRIX_CTRL_CHECKED);
+    lv_obj_align(btnm1, LV_ALIGN_CENTER, 0, 0);
+}
+
 
 /**
  * initialise UI 
